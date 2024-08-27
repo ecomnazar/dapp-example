@@ -3,9 +3,6 @@ import { getAppMetadata } from "@walletconnect/utils";
 if (!process.env.NEXT_PUBLIC_PROJECT_ID)
   throw new Error("`NEXT_PUBLIC_PROJECT_ID` env variable is missing.");
 
-// NEXT_PUBLIC_PROJECT_ID=cf02ca5946a852ee48871c3484df99b9
-// NEXT_PUBLIC_RELAY_URL=wss://relay.walletconnect.com
-
 export const DEFAULT_MAIN_CHAINS = [
   // mainnets
   "eip155:1",

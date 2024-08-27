@@ -117,7 +117,7 @@ const Home: NextPage = () => {
       openPairingModal();
     } else {
       // If no existing pairings are available, trigger `WalletConnectClient.connect`.
-      connect();
+      // connect();
     }
   };
 
@@ -517,16 +517,14 @@ const Home: NextPage = () => {
     }
   };
 
-  console.log(chains);
-
   // Renders the appropriate model for the given request that is currently in-flight.
   const renderModal = () => {
     switch (modal) {
-      case "pairing":
-        if (typeof client === "undefined") {
-          throw new Error("WalletConnect is not initialized");
-        }
-        return <PairingModal pairings={pairings} connect={connect} />;
+      // case "pairing":
+      //   if (typeof client === "undefined") {
+      //     throw new Error("WalletConnect is not initialized");
+      //   }
+      //   return <PairingModal pairings={pairings} connect={connect} />;
       case "request":
         return (
           <RequestModal pending={isRpcRequestPending} result={rpcResult} />
@@ -552,8 +550,6 @@ const Home: NextPage = () => {
   const openDropdown = () => {
     setOpenSelect(!openSelect);
   };
-
-  console.log(chains);
 
   const renderContent = () => {
     const chainOptions = isTestnet ? DEFAULT_TEST_CHAINS : DEFAULT_MAIN_CHAINS;

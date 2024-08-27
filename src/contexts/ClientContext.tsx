@@ -36,7 +36,7 @@ import { getPublicKeysFromAccounts } from "../helpers/solana";
 interface IContext {
   client: Client | undefined;
   session: SessionTypes.Struct | undefined;
-  connect: (pairing?: { topic: string }) => Promise<void>;
+  connect: (chain: string, pairing?: { topic: string }) => Promise<void>;
   disconnect: () => Promise<void>;
   isInitializing: boolean;
   chains: string[];
@@ -141,18 +141,18 @@ export function ClientContextProvider({
   );
 
   const connect = useCallback(
-    async (pairing: any) => {
+    async (chain: string, pairing: any) => {
       if (typeof client === "undefined") {
         throw new Error("WalletConnect is not initialized");
       }
       console.log("connect, pairing topic is:", pairing?.topic);
       try {
-        const requiredNamespaces = getRequiredNamespaces(chains);
+        const requiredNamespaces = getRequiredNamespaces([chain]);
         console.log(
           "requiredNamespaces config for connect:",
           requiredNamespaces
         );
-        const optionalNamespaces = getOptionalNamespaces(chains);
+        const optionalNamespaces = getOptionalNamespaces([chain]);
         console.log(
           "optionalNamespaces config for connect:",
           optionalNamespaces

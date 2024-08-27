@@ -1,26 +1,28 @@
-html,
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face { 
+  font-family: "Tobi";
+  src: url("/fonts/TobiBlack.woff") format("woff"),
+  ;
+  font-style: bold;
+  font-weight: 900;
+}
+
+@font-face { 
+font-family: "Tobi";
+src: url("/fonts/TobiRegular.woff") format("woff"),;
+font-style: normal;
+font-weight: 400;
+}
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+font-family: "Tobi", sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.cardShadow {
+  background: linear-gradient(180deg, #FEFEE9 -52.63%, #FEFEE9 86.72%);
+  border: 1px solid rgba(127, 45, 55, 0.2);
+  box-shadow: 0px 3px 2px rgba(91, 44, 62, 0.45);
 }

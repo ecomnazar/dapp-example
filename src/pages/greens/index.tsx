@@ -10,6 +10,8 @@ import { useWalletConnectClient } from "../../contexts/ClientContext";
 import { SAccounts, SAccountsContainer } from "../../components/app";
 import { GreensFallback } from "../../components/greens/GreensFallback";
 import { BackButton } from "../../components/greens/BackButton";
+import { DrawerModal } from "../../components/shared/DrawerModal";
+import { WalletConnectedModal } from "../../components/greens/modals/WalletConnectedModal";
 
 const GreensPage: NextPage = () => {
   const { accounts, isInitializing, disconnect } = useWalletConnectClient();

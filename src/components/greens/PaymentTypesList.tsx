@@ -10,11 +10,14 @@ import clsx from "clsx";
 import { greensConnectWalletApi } from "../../shared/api/greensApi";
 import { TBlockchainType } from "../../helpers/interfaces";
 import { useUrlParams } from "../../shared/hooks/useUrlParams";
+import { WalletConnectedModal } from "./modals/WalletConnectedModal";
+import { GREENS_MINIAPP_URL } from "../../constants/urls";
 
 export const PaymentTypesList = () => {
-  const { chains, setChains, connect, client, accounts, isModalOpen } =
+  const { chains, setChains, connect, client, accounts } =
     useWalletConnectClient();
 
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [hasClicked, setHasClicked] = React.useState(false);
   const [selectedBlockchainType, setSelectedBlockchainType] =
     React.useState<TBlockchainType>("tron");
@@ -58,6 +61,13 @@ export const PaymentTypesList = () => {
     onConnect();
   };
 
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    if (typeof window !== "undefined") {
+      window.Telegram.WebApp.openTelegramLink(GREENS_MINIAPP_URL);
+    }
+  };
+
   web3Modal.subscribeModal((modal) => {
     if (!modal.open) {
       dismissToast();
@@ -68,6 +78,7 @@ export const PaymentTypesList = () => {
           blockchainType: selectedBlockchainType,
           address,
         });
+        setIsModalOpen(true);
       }
     }
   });
@@ -88,6 +99,8 @@ export const PaymentTypesList = () => {
           />
         );
       })}
+      {/* MODALS */}
+      <WalletConnectedModal modal={true} onClose={onCloseModal} />
     </>
   );
 };

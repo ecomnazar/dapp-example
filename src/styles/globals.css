@@ -4,17 +4,16 @@
 
 @font-face { 
   font-family: "Tobi";
-  src: url("/fonts/TobiBlack.woff") format("woff"),
-  ;
+  src: url("/fonts/TobiBlack.woff") format("woff");
   font-style: bold;
   font-weight: 900;
 }
 
 @font-face { 
-font-family: "Tobi";
-src: url("/fonts/TobiRegular.woff") format("woff"),;
-font-style: normal;
-font-weight: 400;
+  font-family: "Tobi";
+  src: url("/fonts/TobiRegular.woff") format("woff"),;
+  font-style: normal;
+  font-weight: 400;
 }
 
 body {
@@ -26,4 +25,19 @@ background-color: #F3DBBC;
   background: linear-gradient(180deg, #FEFEE9 -52.63%, #FEFEE9 86.72%);
   border: 1px solid rgba(127, 45, 55, 0.2);
   box-shadow: 0px 3px 2px rgba(91, 44, 62, 0.45);
+}
+
+.greensCustomButtonFrontDiv{
+  background: linear-gradient(180deg, #98EF1D 8.17%, #5CC313 89.47%);
+  box-shadow: inset 0px -2px 3px #74D324, inset 0px 4px 2.5px #BEF93A;
+  /* border-radius: 16px; */
+  padding: 0px 16px;
+  padding-top: 6px;
+  padding-bottom: 3.5px;
+}
+
+.greensCustomButtonBgShadow {
+  background-color: #448C28;
+  filter: drop-shadow(0px 3px 2px rgba(91, 44, 62, 0.45));
+  /* border-radius: 50px; */
 }

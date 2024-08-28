@@ -48,10 +48,10 @@ export const DEFAULT_RELAY_URL = process.env.NEXT_PUBLIC_RELAY_URL;
 export const DEFAULT_LOGGER = "debug";
 
 export const DEFAULT_APP_METADATA = {
-  name: "React App",
-  description: "React App for WalletConnect",
-  url: "https://walletconnect.com/",
-  icons: ["https://avatars.githubusercontent.com/u/37784886"],
+  name: "Connect wallet",
+  description: "Greens connect wallet",
+  url: "http://t.me/GreensfiBot/play",
+  icons: ["https://tg.greensfi.com/images/logo.jpg"],
   verifyUrl: "https://verify.walletconnect.com",
 };
 

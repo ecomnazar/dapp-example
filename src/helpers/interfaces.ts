@@ -2,6 +2,8 @@ export interface IPaymentMethod {
   icon: string;
   title: string;
   width: number;
-  type: string;
+  type: TBlockchainType;
   chain: string;
 }
+
+export type TBlockchainType = "tron" | "ton" | "erc" | "sol";

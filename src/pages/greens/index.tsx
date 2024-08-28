@@ -9,48 +9,12 @@ import { ShadowText } from "../../components/greens/ShadowText";
 import { useWalletConnectClient } from "../../contexts/ClientContext";
 import { SAccounts, SAccountsContainer } from "../../components/app";
 import { GreensFallback } from "../../components/greens/GreensFallback";
+import { BackButton } from "../../components/greens/BackButton";
 
 const GreensPage: NextPage = () => {
-  const { session, accounts, isInitializing, disconnect } =
-    useWalletConnectClient();
+  const { accounts, isInitializing, disconnect } = useWalletConnectClient();
 
-  const [modal, setModal] = React.useState("");
   const [initLoading, setInitLoading] = React.useState(true);
-
-  const closeModal = () => setModal("");
-
-  // const renderModal = () => {
-  //   switch (modal) {
-  //     case "pairing":
-  //       if (typeof client === "undefined") {
-  //         throw new Error("WalletConnect is not initialized");
-  //       }
-  //       return <PairingModal pairings={pairings} connect={connect} />;
-  //     case "request":
-  //       return (
-  //         <RequestModal pending={isRpcRequestPending} result={rpcResult} />
-  //       );
-  //     case "ping":
-  //       return <PingModal pending={isRpcRequestPending} result={rpcResult} />;
-  //     case "requestLoader":
-  //       return (
-  //         <RequestLoaderModal
-  //           pending={isRpcRequestPending}
-  //           result={rpcResult}
-  //         />
-  //       );
-  //     case "disconnect":
-  //       return <LoaderModal title={"Disconnecting..."} />;
-  //     default:
-  //       return null;
-  //   }
-  // };
-
-  React.useEffect(() => {
-    if (session && modal === "pairing") {
-      closeModal();
-    }
-  }, [session, modal]);
 
   React.useEffect(() => {
     const images = [
@@ -119,7 +83,7 @@ const GreensPage: NextPage = () => {
           <HeaderBackground />
           <Container className="absolute top-[18%] left-0">
             <Flex className="gap-x-4">
-              {/* <BackButton className="-translate-y-0.5" /> */}
+              <BackButton className="-translate-y-0.5" />
               <ShadowText
                 title="Connect Wallet"
                 shadowColor="#974A15"
@@ -161,12 +125,6 @@ const GreensPage: NextPage = () => {
       )}
 
       <FooterBackground className="fixed bottom-0 left-0 w-full" />
-
-      {/*  */}
-
-      {/* <Modal show={!!modal} closeModal={closeModal}> */}
-      {/* {renderModal()} */}
-      {/* </Modal> */}
     </div>
   );
 };

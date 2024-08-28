@@ -48,6 +48,7 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "@twa-dev/types": "^7.8.0",
     "@types/eth-sig-util": "^2.1.1",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.14",

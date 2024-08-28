@@ -5,7 +5,7 @@ import { RELAYER_EVENTS } from "@walletconnect/core";
 import toast from "react-hot-toast";
 
 import { PublicKey } from "@solana/web3.js";
-import {
+import React, {
   createContext,
   ReactNode,
   useCallback,
@@ -49,6 +49,7 @@ interface IContext {
   setChains: any;
   setRelayerRegion: any;
   origin: string;
+  isModalOpen: boolean;
 }
 
 /**
@@ -59,10 +60,16 @@ export const ClientContext = createContext<IContext>({} as IContext);
 /**
  * Web3Modal Config
  */
-const web3Modal = new Web3Modal({
+export const web3Modal = new Web3Modal({
   projectId: DEFAULT_PROJECT_ID,
   themeMode: "light",
   walletConnectVersion: 2,
+  themeVariables: {
+    "--w3m-background-color": "#FEFAF1",
+    "--w3m-accent-color": "#FEFAF1",
+    "--w3m-accent-fill-color": "#FEFAF1",
+    "--w3m-background-border-radius": "20px",
+  },
 });
 
 /**
@@ -80,6 +87,7 @@ export function ClientContextProvider({
   const [isFetchingBalances, setIsFetchingBalances] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
   const prevRelayerValue = useRef<string>("");
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const [balances, setBalances] = useState<AccountBalances>({});
   const [accounts, setAccounts] = useState<string[]>([]);
@@ -145,6 +153,7 @@ export function ClientContextProvider({
       if (typeof client === "undefined") {
         throw new Error("WalletConnect is not initialized");
       }
+      setIsModalOpen(true);
       console.log("connect, pairing topic is:", pairing?.topic);
       try {
         const requiredNamespaces = getRequiredNamespaces([chain]);
@@ -187,6 +196,7 @@ export function ClientContextProvider({
       } finally {
         // close modal in case it was open
         web3Modal.closeModal();
+        setIsModalOpen(false);
       }
     },
     [chains, client, onSessionConnected]
@@ -375,6 +385,7 @@ export function ClientContextProvider({
       setChains,
       setRelayerRegion,
       origin,
+      isModalOpen,
     }),
     [
       pairings,
@@ -392,6 +403,7 @@ export function ClientContextProvider({
       setChains,
       setRelayerRegion,
       origin,
+      isModalOpen,
     ]
   );
 

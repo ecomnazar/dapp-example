@@ -120,7 +120,21 @@ export const PaymentTypesList = () => {
         </div>
       ) : (
         <>
-          {accounts.length ? (
+          {PAYMENT_METHODS.map((paymentMethod) => {
+            const { chain, type } = paymentMethod;
+            return (
+              <Card
+                key={paymentMethod.chain}
+                paymentMethod={paymentMethod}
+                onClick={() => handleChainSelectionClick(chain, type)}
+                isActive={chains.includes(paymentMethod.chain)}
+                className={clsx("", {
+                  "pointer-events-none": hasClicked,
+                })}
+              />
+            );
+          })}
+          {/* {accounts.length ? (
             <>
               {accounts.map((account, index) => {
                 const [namespace, reference, address] = account.split(":");
@@ -149,7 +163,7 @@ export const PaymentTypesList = () => {
                 />
               );
             })
-          )}
+          )} */}
         </>
       )}
 

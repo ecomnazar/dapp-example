@@ -75,6 +75,7 @@ export const PaymentTypesList = () => {
   };
 
   web3Modal.subscribeModal((modal) => {
+    setGetUserWalletError(false);
     if (!modal.open) {
       dismissToast();
     }

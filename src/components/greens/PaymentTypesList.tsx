@@ -155,7 +155,7 @@ export const PaymentTypesList = () => {
 
       {/* MODALS */}
       {getUserWalletLoading}
-      <WalletConnectedModal modal={true} onClose={onCloseModal} />
+      <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
     </>
   );
 };

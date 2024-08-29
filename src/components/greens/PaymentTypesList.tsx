@@ -80,7 +80,7 @@ export const PaymentTypesList = () => {
   });
 
   React.useEffect(() => {
-    if (accounts.length) {
+    if (accounts.length && !getUserWalletLoading) {
       const [namespace, reference, address] = accounts[0].split(":");
       greensConnectWalletApi({
         token: getParam("tkn"),
@@ -89,12 +89,15 @@ export const PaymentTypesList = () => {
       });
       setIsModalOpen(true);
     }
-  }, [accounts]);
+  }, [accounts, getUserWalletLoading]);
 
   React.useEffect(() => {
     const fetchUserWallet = async () => {
       setGetUserWalletLoading(true);
-      await getUserWalletApi(getParam("tkn")).catch(() => disconnect());
+      await getUserWalletApi(getParam("tkn")).catch(() => {
+        console.log("catch error");
+        toast.error("catch error");
+      });
       setGetUserWalletLoading(false);
     };
     fetchUserWallet();
@@ -147,6 +150,7 @@ export const PaymentTypesList = () => {
       )}
 
       {/* MODALS */}
+      {getUserWalletLoading}
       <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
     </>
   );

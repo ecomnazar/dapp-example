@@ -83,12 +83,14 @@ export const PaymentTypesList = () => {
   React.useEffect(() => {
     if (accounts.length && !getUserWalletLoading) {
       const [namespace, reference, address] = accounts[0].split(":");
-      greensConnectWalletApi({
-        token: getParam("tkn"),
-        blockchainType: selectedBlockchainType,
-        address,
-      });
-      setIsModalOpen(true);
+      if (!getUserWalletError) {
+        greensConnectWalletApi({
+          token: getParam("tkn"),
+          blockchainType: selectedBlockchainType,
+          address,
+        });
+        setIsModalOpen(true);
+      }
     }
   }, [accounts, getUserWalletLoading]);
 
@@ -152,10 +154,7 @@ export const PaymentTypesList = () => {
 
       {/* MODALS */}
       {getUserWalletLoading}
-      <WalletConnectedModal
-        modal={isModalOpen && !getUserWalletError}
-        onClose={onCloseModal}
-      />
+      <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
     </>
   );
 };

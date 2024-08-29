@@ -95,8 +95,9 @@ export const PaymentTypesList = () => {
     const fetchUserWallet = async () => {
       setGetUserWalletLoading(true);
       await getUserWalletApi(getParam("tkn")).catch(() => {
-        console.log("catch error");
-        toast.error("catch error");
+        // console.log("catch error");
+        // toast.error("catch error");
+        disconnect();
       });
       setGetUserWalletLoading(false);
     };

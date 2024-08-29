@@ -38,7 +38,7 @@ export const greensConnectWalletApi = async ({
     );
     return response.data;
   } catch (error) {
-    toast.error("Connect error");
+    // toast.error("Connect error");
   }
 };
 

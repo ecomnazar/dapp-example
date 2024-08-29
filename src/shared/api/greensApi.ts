@@ -51,6 +51,6 @@ export const getUserWalletApi = async (token: string) => {
     });
     return response.data;
   } catch (error) {
-    // toast.error("Connect error");
+    return Promise.reject(error);
   }
 };

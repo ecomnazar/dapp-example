@@ -189,9 +189,9 @@ export function ClientContextProvider({
         setPairings(client.pairing.getAll({ active: true }));
       } catch (e) {
         console.error(e);
-        toast.error((e as Error).message, {
-          position: "bottom-left",
-        });
+        // toast.error((e as Error).message, {
+        //   position: "bottom-left",
+        // });
         throw e;
       } finally {
         // close modal in case it was open
@@ -362,9 +362,9 @@ export function ClientContextProvider({
     });
 
     client.core.relayer.on(RELAYER_EVENTS.disconnect, () => {
-      toast.error("Network connection lost.", {
-        position: "bottom-left",
-      });
+      // toast.error("Network connection lost.", {
+      //   position: "bottom-left",
+      // });
     });
   }, [client]);
 

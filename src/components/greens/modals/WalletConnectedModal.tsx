@@ -12,6 +12,11 @@ interface Props {
 export const WalletConnectedModal: React.FC<Props> = ({ modal, onClose }) => {
   return (
     <DrawerModal isOpen={modal} onClose={onClose}>
+      <ReactSVG
+        src="/greens/icons/close.svg"
+        className="w-[36px] absolute top-3 right-3"
+        onClick={onClose}
+      />
       <div className="flex-1" />
       <ReactSVG src="/greens/icons/tick.svg" className="w-[60px] mx-auto" />
 

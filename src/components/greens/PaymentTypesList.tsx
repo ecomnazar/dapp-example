@@ -70,6 +70,7 @@ export const PaymentTypesList = () => {
 
   web3Modal.subscribeModal((modal) => {
     if (!modal.open) {
+      console.log("dismiss");
       dismissToast();
     }
   });

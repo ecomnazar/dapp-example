@@ -17,7 +17,7 @@ export const DrawerModal: React.FC<Props> = ({
   height = 400,
   className,
 }) => {
-  const divRef = useOutsideClick(() => onClose());
+  const divRef = useOutsideClick(() => isOpen && onClose());
 
   return (
     <div

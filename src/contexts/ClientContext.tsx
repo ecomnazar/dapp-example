@@ -66,7 +66,7 @@ export const web3Modal = new Web3Modal({
   walletConnectVersion: 2,
   themeVariables: {
     "--w3m-background-color": "#FEFAF1",
-    "--w3m-accent-color": "#FEFAF1",
+    // "--w3m-accent-color": "#FEFAF1",
     "--w3m-accent-fill-color": "#FEFAF1",
     "--w3m-background-border-radius": "20px",
   },

@@ -14,7 +14,7 @@ import { WalletConnectedModal } from "./modals/WalletConnectedModal";
 import { GREENS_MINIAPP_URL } from "../../constants/urls";
 
 export const PaymentTypesList = () => {
-  const { chains, setChains, connect, client, accounts } =
+  const { chains, setChains, connect, client, accounts, disconnect } =
     useWalletConnectClient();
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -85,22 +85,38 @@ export const PaymentTypesList = () => {
 
   return (
     <>
-      {PAYMENT_METHODS.map((paymentMethod) => {
-        const { chain, type } = paymentMethod;
-        return (
-          <Card
-            key={paymentMethod.chain}
-            paymentMethod={paymentMethod}
-            onClick={() => handleChainSelectionClick(chain, type)}
-            isActive={chains.includes(paymentMethod.chain)}
-            className={clsx("", {
-              "pointer-events-none": hasClicked,
-            })}
-          />
-        );
-      })}
+      {accounts.length ? (
+        <>
+          {accounts.map((account, index) => {
+            const [namespace, reference, address] = account.split(":");
+            const chainId = `${namespace}:${reference}`;
+            return (
+              <div key={index}>
+                <button onClick={disconnect}>Disconnect</button>
+                <h2>{chainId}</h2>
+                <h3>{address}</h3>
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        PAYMENT_METHODS.map((paymentMethod) => {
+          const { chain, type } = paymentMethod;
+          return (
+            <Card
+              key={paymentMethod.chain}
+              paymentMethod={paymentMethod}
+              onClick={() => handleChainSelectionClick(chain, type)}
+              isActive={chains.includes(paymentMethod.chain)}
+              className={clsx("", {
+                "pointer-events-none": hasClicked,
+              })}
+            />
+          );
+        })
+      )}
       {/* MODALS */}
-      <WalletConnectedModal modal={true} onClose={onCloseModal} />
+      <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
     </>
   );
 };

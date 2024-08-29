@@ -11,6 +11,13 @@ interface IGreensConnectWalletApiProps {
   address: string;
 }
 
+const instance = axios.create({
+  baseURL: BASE_URL, // Base URL for all requests
+  headers: {
+    "Content-Type": "application/json", // Default content type for all requests
+  },
+});
+
 export const greensConnectWalletApi = async ({
   token,
   blockchainType,
@@ -20,8 +27,8 @@ export const greensConnectWalletApi = async ({
     walletAddress: address,
   };
   try {
-    const response = await axios.post(
-      `${BASE_URL}/wallet/${blockchainType}/connect`,
+    const response = await instance.post(
+      `/wallet/${blockchainType}/connect`,
       data,
       {
         headers: {
@@ -29,6 +36,19 @@ export const greensConnectWalletApi = async ({
         },
       }
     );
+    return response.data;
+  } catch (error) {
+    toast.error("Connect error");
+  }
+};
+
+export const getUserWalletApi = async (token: string) => {
+  try {
+    const response = await instance.get(`/wallet`, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
     return response.data;
   } catch (error) {
     toast.error("Connect error");

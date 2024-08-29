@@ -48,7 +48,7 @@ export const DEFAULT_RELAY_URL = process.env.NEXT_PUBLIC_RELAY_URL;
 export const DEFAULT_LOGGER = "debug";
 
 export const DEFAULT_APP_METADATA = {
-  name: "Connect wallet",
+  name: "Greens",
   description: "Greens connect wallet",
   url: "http://t.me/GreensfiBot/play",
   icons: ["https://tg.greensfi.com/images/logo.jpg"],

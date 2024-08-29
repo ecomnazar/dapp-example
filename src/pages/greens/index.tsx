@@ -1,5 +1,5 @@
-import { NextPage } from "next";
 import React from "react";
+import { NextPage } from "next";
 import { FooterBackground } from "../../components/greens/FooterBackground";
 import { HeaderBackground } from "../../components/greens/HeaderBackground";
 import { PaymentTypesList } from "../../components/greens/PaymentTypesList";
@@ -7,16 +7,17 @@ import { Flex } from "../../components/Flex";
 import { Container } from "../../components/Container";
 import { ShadowText } from "../../components/greens/ShadowText";
 import { useWalletConnectClient } from "../../contexts/ClientContext";
-import { SAccounts, SAccountsContainer } from "../../components/app";
 import { GreensFallback } from "../../components/greens/GreensFallback";
 import { BackButton } from "../../components/greens/BackButton";
-import { DrawerModal } from "../../components/shared/DrawerModal";
-import { WalletConnectedModal } from "../../components/greens/modals/WalletConnectedModal";
+import { getUserWalletApi } from "../../shared/api/greensApi";
+import { useUrlParams } from "../../shared/hooks/useUrlParams";
 
 const GreensPage: NextPage = () => {
-  const { accounts, isInitializing, disconnect } = useWalletConnectClient();
+  const { isInitializing, disconnect } = useWalletConnectClient();
 
   const [initLoading, setInitLoading] = React.useState(true);
+  // const [getParam] = useUrlParams();
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     const images = [
@@ -76,10 +77,19 @@ const GreensPage: NextPage = () => {
       });
   }, []);
 
+  React.useEffect(() => {
+    // const fetchUserWallet = async () => {
+    //   setLoading(true);
+    //   await getUserWalletApi(getParam("tkn")).catch(() => disconnect());
+    //   setLoading(false);
+    // };
+    // fetchUserWallet();
+  }, []);
+
   if (initLoading) return <GreensFallback />;
 
   return (
-    <div className="h-screen">
+    <div className="h-[100dvh]">
       <div className="fixed top-0 left-0 w-screen">
         <div className="relative w-full">
           <HeaderBackground />
@@ -97,32 +107,13 @@ const GreensPage: NextPage = () => {
         </div>
       </div>
 
-      {isInitializing ? (
+      {isInitializing || loading ? (
         <GreensFallback />
       ) : (
         <>
-          {accounts.length ? (
-            <SAccountsContainer>
-              <h3>Accounts</h3>
-              <button onClick={disconnect}>Disconnect</button>
-              <SAccounts>
-                {accounts.map((account, index) => {
-                  const [namespace, reference, address] = account.split(":");
-                  const chainId = `${namespace}:${reference}`;
-                  return (
-                    <div key={index}>
-                      <h2>{chainId}</h2>
-                      <h3>{address}</h3>
-                    </div>
-                  );
-                })}
-              </SAccounts>
-            </SAccountsContainer>
-          ) : (
-            <Container className="pt-[25vw] space-y-3">
-              <PaymentTypesList />
-            </Container>
-          )}
+          <Container className="pt-[25vw] space-y-3">
+            <PaymentTypesList />
+          </Container>
         </>
       )}
 

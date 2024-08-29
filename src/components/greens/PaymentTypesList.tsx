@@ -21,6 +21,7 @@ export const PaymentTypesList = () => {
   const { chains, setChains, connect, client, accounts, disconnect } =
     useWalletConnectClient();
 
+  const [getUserWalletError, setGetUserWalletError] = React.useState(false);
   const [getUserWalletLoading, setGetUserWalletLoading] = React.useState(true);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [hasClicked, setHasClicked] = React.useState(false);
@@ -95,9 +96,8 @@ export const PaymentTypesList = () => {
     const fetchUserWallet = async () => {
       setGetUserWalletLoading(true);
       await getUserWalletApi(getParam("tkn")).catch(() => {
-        // console.log("catch error");
-        // toast.error("catch error");
         disconnect();
+        setGetUserWalletError(true);
       });
       setGetUserWalletLoading(false);
     };
@@ -152,7 +152,10 @@ export const PaymentTypesList = () => {
 
       {/* MODALS */}
       {getUserWalletLoading}
-      <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
+      <WalletConnectedModal
+        modal={isModalOpen && !getUserWalletError}
+        onClose={onCloseModal}
+      />
     </>
   );
 };

@@ -71,17 +71,20 @@ export const PaymentTypesList = () => {
   web3Modal.subscribeModal((modal) => {
     if (!modal.open) {
       dismissToast();
-      if (accounts.length) {
-        const [namespace, reference, address] = accounts[0].split(":");
-        greensConnectWalletApi({
-          token: getParam("tkn"),
-          blockchainType: selectedBlockchainType,
-          address,
-        });
-        setIsModalOpen(true);
-      }
     }
   });
+
+  React.useEffect(() => {
+    if (accounts.length) {
+      const [namespace, reference, address] = accounts[0].split(":");
+      greensConnectWalletApi({
+        token: getParam("tkn"),
+        blockchainType: selectedBlockchainType,
+        address,
+      });
+      setIsModalOpen(true);
+    }
+  }, [accounts]);
 
   return (
     <>
@@ -92,7 +95,7 @@ export const PaymentTypesList = () => {
             const chainId = `${namespace}:${reference}`;
             return (
               <div key={index}>
-                <button onClick={disconnect}>Disconnect</button>
+                <button onClick={disconnect}>Disconnect wallet</button>
                 <h2>{chainId}</h2>
                 <h3>{address}</h3>
               </div>

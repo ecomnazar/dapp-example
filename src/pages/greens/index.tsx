@@ -9,7 +9,10 @@ import { ShadowText } from "../../components/greens/ShadowText";
 import { useWalletConnectClient } from "../../contexts/ClientContext";
 import { GreensFallback } from "../../components/greens/GreensFallback";
 import { BackButton } from "../../components/greens/BackButton";
-import { getUserWalletApi } from "../../shared/api/greensApi";
+import {
+  getUserWalletApi,
+  greensConnectWalletApi,
+} from "../../shared/api/greensApi";
 import { useUrlParams } from "../../shared/hooks/useUrlParams";
 
 const GreensPage: NextPage = () => {
@@ -84,6 +87,11 @@ const GreensPage: NextPage = () => {
     //   setLoading(false);
     // };
     // fetchUserWallet();
+    // greensConnectWalletApi({
+    //   address: "123",
+    //   blockchainType: "tron",
+    //   token: "3d376b0b61b245a688741b9535379a631715083654275",
+    // });
   }, []);
 
   if (initLoading) return <GreensFallback />;

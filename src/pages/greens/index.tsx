@@ -80,20 +80,6 @@ const GreensPage: NextPage = () => {
       });
   }, []);
 
-  React.useEffect(() => {
-    // const fetchUserWallet = async () => {
-    //   setLoading(true);
-    //   await getUserWalletApi(getParam("tkn")).catch(() => disconnect());
-    //   setLoading(false);
-    // };
-    // fetchUserWallet();
-    // greensConnectWalletApi({
-    //   address: "123",
-    //   blockchainType: "tron",
-    //   token: "3d376b0b61b245a688741b9535379a631715083654275",
-    // });
-  }, []);
-
   if (initLoading) return <GreensFallback />;
 
   return (

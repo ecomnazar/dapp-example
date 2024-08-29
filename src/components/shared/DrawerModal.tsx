@@ -22,7 +22,7 @@ export const DrawerModal: React.FC<Props> = ({
   return (
     <div
       className={clsx(
-        "h-screen w-screen bg-black fixed top-0 left-0 flex items-end z-[999] !mt-[0px] transition-all duration-500",
+        "h-screen w-screen bg-black fixed top-0 left-0 flex items-end fixViewport z-[999] !mt-[0px] transition-all duration-500",
         {
           "bg-opacity-50 visible": isOpen,
           "bg-opacity-0 invisible": !isOpen,

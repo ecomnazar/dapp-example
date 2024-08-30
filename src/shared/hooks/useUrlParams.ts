@@ -1,5 +1,5 @@
 // Define the type for the URL parameters
-type IUrlParams = "tkn" | "lang";
+type IUrlParams = "tkn" | "lang" | "blockchainType";
 
 // Define the return type for the custom hook
 type UseUrlParamsReturn = [(key: IUrlParams) => string];

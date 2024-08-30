@@ -53,6 +53,9 @@ export const PaymentTypesList = () => {
     chainId: string,
     blockchainType: TBlockchainType
   ) => {
+    console.log(hasClicked);
+
+    if (hasClicked) return;
     showToast();
     setHasClicked(true);
     setSelectedBlockchainType(blockchainType);
@@ -103,6 +106,11 @@ export const PaymentTypesList = () => {
         setGetUserWalletError(true);
       });
       setGetUserWalletLoading(false);
+      const blockchainType = getParam("blockchainType");
+      const chain = PAYMENT_METHODS.find(
+        (method) => method.type === blockchainType
+      );
+      handleChainSelectionClick(chain?.chain!, chain?.type!);
     };
     fetchUserWallet();
     // greensConnectWalletApi({
@@ -169,7 +177,7 @@ export const PaymentTypesList = () => {
 
       {/* MODALS */}
       {getUserWalletLoading}
-      <WalletConnectedModal modal={true} onClose={onCloseModal} />
+      <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
     </>
   );
 };

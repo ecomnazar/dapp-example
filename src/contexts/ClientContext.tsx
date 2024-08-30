@@ -207,7 +207,8 @@ export function ClientContextProvider({
       throw new Error("WalletConnect is not initialized");
     }
     if (typeof session === "undefined") {
-      throw new Error("Session is not connected");
+      // throw new Error("Session is not connected");
+      return;
     }
 
     await client.disconnect({

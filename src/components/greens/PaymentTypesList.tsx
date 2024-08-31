@@ -102,10 +102,10 @@ export const PaymentTypesList = () => {
 
   React.useEffect(() => {
     const fetchUserWallet = async () => {
-      setGetUserWalletLoading(true);
       const searchParams = new URLSearchParams(window.location.search);
       const tkn = searchParams.get("tkn") || "";
       const blockchainType = searchParams.get("blockchainType") || "";
+
       await getUserWalletApi(tkn).catch(() => {
         disconnect();
         setGetUserWalletError(true);
@@ -182,7 +182,10 @@ export const PaymentTypesList = () => {
 
       {/* MODALS */}
       {getUserWalletLoading}
-      <WalletConnectedModal modal={isModalOpen} onClose={onCloseModal} />
+      <WalletConnectedModal
+        modal={isModalOpen && !!accounts.length}
+        onClose={onCloseModal}
+      />
     </>
   );
 };

@@ -44,7 +44,7 @@ export const greensConnectWalletApi = async ({
 
 export const getUserWalletApi = async (token: string) => {
   try {
-    const response = await instance.get(`/wallet`, {
+    const response = await instance.get(`/wallets`, {
       headers: {
         "x-auth-token": token,
       },

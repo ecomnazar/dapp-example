@@ -19,6 +19,8 @@ export const useUrlParams = (): UseUrlParamsReturn => {
 
   // Function to get a URL parameter
   const getParam = (key: IUrlParams): string => {
+    console.log("searchparams: ", searchParams);
+
     return searchParams?.get(key) || "";
   };
 

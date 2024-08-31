@@ -57,8 +57,6 @@ export const PaymentTypesList = () => {
     chainId: string,
     blockchainType: TBlockchainType
   ) => {
-    console.log(hasClicked);
-
     if (hasClicked) return;
     showToast();
     setHasClicked(true);
@@ -105,12 +103,15 @@ export const PaymentTypesList = () => {
   React.useEffect(() => {
     const fetchUserWallet = async () => {
       setGetUserWalletLoading(true);
-      await getUserWalletApi(getParam("tkn")).catch(() => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const tkn = searchParams.get("tkn") || "";
+      const blockchainType = searchParams.get("blockchainType") || "";
+      await getUserWalletApi(tkn).catch(() => {
         disconnect();
         setGetUserWalletError(true);
       });
+
       setGetUserWalletLoading(false);
-      const blockchainType = getParam("blockchainType");
       const chain = PAYMENT_METHODS.find(
         (method) => method.type === blockchainType
       );

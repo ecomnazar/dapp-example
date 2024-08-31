@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 // Define the type for the URL parameters
 type IUrlParams = "tkn" | "lang" | "blockchainType";
 
@@ -5,12 +7,21 @@ type IUrlParams = "tkn" | "lang" | "blockchainType";
 type UseUrlParamsReturn = [(key: IUrlParams) => string];
 
 export const useUrlParams = (): UseUrlParamsReturn => {
-  // Use the useSearchParams hook from react-router-dom
-  const searchParams = new URLSearchParams(window.location.search);
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setSearchParams(new URLSearchParams(window.location.search));
+    }
+  }, []);
 
   // Function to get a URL parameter
-  const getParam = (key: IUrlParams): string => searchParams.get(key) || "";
+  const getParam = (key: IUrlParams): string => {
+    return searchParams?.get(key) || "";
+  };
 
-  // Return the getParam and setParam functions
+  // Return the getParam function
   return [getParam];
 };

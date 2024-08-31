@@ -14,9 +14,11 @@ import {
   greensConnectWalletApi,
 } from "../../shared/api/greensApi";
 import { useUrlParams } from "../../shared/hooks/useUrlParams";
+import { useI18n } from "../../shared/hooks/useI18n";
 
 const GreensPage: NextPage = () => {
   const { isInitializing, disconnect } = useWalletConnectClient();
+  const isRu = useI18n();
 
   const [initLoading, setInitLoading] = React.useState(true);
   // const [getParam] = useUrlParams();
@@ -91,7 +93,7 @@ const GreensPage: NextPage = () => {
             <Flex className="gap-x-4">
               <BackButton className="-translate-y-0.5" />
               <ShadowText
-                title="Connect Wallet"
+                title={"Connect Wallet"}
                 shadowColor="#974A15"
                 shadowSize="3"
                 fontSize="30px"

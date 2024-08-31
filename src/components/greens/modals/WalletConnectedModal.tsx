@@ -2,6 +2,7 @@ import React from "react";
 import { DrawerModal } from "../../shared/DrawerModal";
 import { ReactSVG } from "react-svg";
 import { CustomButton } from "../CustomButton";
+import { useI18n } from "../../../shared/hooks/useI18n";
 
 interface Props {
   className?: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const WalletConnectedModal: React.FC<Props> = ({ modal, onClose }) => {
+  const isRu = useI18n();
   return (
     <DrawerModal isOpen={modal} onClose={onClose}>
       <ReactSVG
@@ -22,11 +24,12 @@ export const WalletConnectedModal: React.FC<Props> = ({ modal, onClose }) => {
 
       <div className="text-center mb-[40px] mt-[20px] space-y-4">
         <h2 className="text-greensPrimary text-[30px] font-bold">
-          Successfully
+          {isRu ? "Успешно" : "Successfully"}
         </h2>
         <h4 className="text-greensPrimary text-[17px] max-w-[300px] text-center mx-auto">
-          You have connected your wallet to the game. You can close this window,
-          it allows you back to the game.
+          {isRu
+            ? "Вы подключили кошелек к игре. Вы можете закрыть это окно, это переведет вас обратно в игру."
+            : "You have connected your wallet to the game. You can close this window, it allows you back to the game."}
         </h4>
       </div>
 

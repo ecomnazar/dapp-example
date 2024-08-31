@@ -30,6 +30,10 @@ export const PaymentTypesList = () => {
 
   const [getParam] = useUrlParams();
 
+  const filteredPaymentMethods = PAYMENT_METHODS.filter(
+    (method) => method.type === getParam("blockchainType")
+  );
+
   let toastId: any;
 
   const showToast = () => {
@@ -128,7 +132,7 @@ export const PaymentTypesList = () => {
         </div>
       ) : (
         <>
-          {PAYMENT_METHODS.map((paymentMethod) => {
+          {filteredPaymentMethods?.map((paymentMethod) => {
             const { chain, type } = paymentMethod;
             return (
               <Card

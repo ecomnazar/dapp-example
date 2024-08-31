@@ -106,10 +106,12 @@ export const PaymentTypesList = () => {
       const tkn = searchParams.get("tkn") || "";
       const blockchainType = searchParams.get("blockchainType") || "";
 
-      await getUserWalletApi(tkn).catch(() => {
+      const response = await getUserWalletApi(tkn);
+      if (!response.length) {
         disconnect();
         setGetUserWalletError(true);
-      });
+        console.log(response);
+      }
 
       setGetUserWalletLoading(false);
       const chain = PAYMENT_METHODS.find(

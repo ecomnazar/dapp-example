@@ -110,7 +110,6 @@ export const PaymentTypesList = () => {
       if (!response.length) {
         disconnect();
         setGetUserWalletError(true);
-        console.log(response);
       }
 
       setGetUserWalletLoading(false);

@@ -21,7 +21,7 @@ export const Header: React.FC<Props> = ({ title }) => {
             <ShadowText
               title={title}
               shadowColor="#974A15"
-              shadowSize="3"
+              shadowSize="4"
               fontSize="30px"
             />
           </Flex>

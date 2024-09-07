@@ -10,7 +10,7 @@ export const FooterBackground: React.FC<Props> = ({ className }) => {
   return (
     <ReactSVG
       src="/greens/icons/footer-background.svg"
-      className={clsx("", className)}
+      className={clsx("fixed bottom-0 left-0 w-full", className)}
     />
   );
 };

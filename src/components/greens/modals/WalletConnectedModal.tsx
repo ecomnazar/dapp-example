@@ -35,7 +35,7 @@ export const WalletConnectedModal: React.FC<Props> = ({ modal, onClose }) => {
 
       <div className="relative">
         <ReactSVG src="/greens/icons/rounded-footer-background.svg" />
-        <CustomButton title="Close" onClick={onClose} />
+        <CustomButton title={isRu ? "Закрыть" : "Close"} onClick={onClose} />
       </div>
     </DrawerModal>
   );

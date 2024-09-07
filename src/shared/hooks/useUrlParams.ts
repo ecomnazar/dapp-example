@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 
 // Define the type for the URL parameters
-type IUrlParams = "tkn" | "lang" | "blockchainType";
+type IUrlParams =
+  | "tkn"
+  | "lang"
+  | "blockchainType"
+  | "receiverAddress"
+  | "sendValueAmount";
 
 // Define the return type for the custom hook
 type UseUrlParamsReturn = [(key: IUrlParams) => string];
@@ -19,8 +24,6 @@ export const useUrlParams = (): UseUrlParamsReturn => {
 
   // Function to get a URL parameter
   const getParam = (key: IUrlParams): string => {
-    console.log("searchparams: ", searchParams);
-
     return searchParams?.get(key) || "";
   };
 

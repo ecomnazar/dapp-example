@@ -15,6 +15,7 @@ import {
 } from "../../shared/api/greensApi";
 import { useUrlParams } from "../../shared/hooks/useUrlParams";
 import { useI18n } from "../../shared/hooks/useI18n";
+import { Header } from "../../components/greens/Header";
 
 const GreensPage: NextPage = () => {
   const { isInitializing, disconnect } = useWalletConnectClient();
@@ -86,22 +87,7 @@ const GreensPage: NextPage = () => {
 
   return (
     <div className="h-[100dvh]">
-      <div className="fixed top-0 left-0 w-screen">
-        <div className="relative w-full">
-          <HeaderBackground />
-          <Container className="absolute top-[18%] left-0">
-            <Flex className="gap-x-4">
-              <BackButton className="-translate-y-0.5" />
-              <ShadowText
-                title={"Connect Wallet"}
-                shadowColor="#974A15"
-                shadowSize="3"
-                fontSize="30px"
-              />
-            </Flex>
-          </Container>
-        </div>
-      </div>
+      <Header title="Connect Wallet" />
 
       {isInitializing || loading ? (
         <GreensFallback />
@@ -113,7 +99,7 @@ const GreensPage: NextPage = () => {
         </>
       )}
 
-      <FooterBackground className="fixed bottom-0 left-0 w-full" />
+      <FooterBackground />
     </div>
   );
 };

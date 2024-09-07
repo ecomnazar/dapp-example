@@ -117,7 +117,7 @@ const Home: NextPage = () => {
       openPairingModal();
     } else {
       // If no existing pairings are available, trigger `WalletConnectClient.connect`.
-      // connect();
+      connect("tron:0x2b6653dc");
     }
   };
 

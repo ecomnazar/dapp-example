@@ -16,6 +16,7 @@ import {
   ChainData,
 } from "../helpers";
 import { fonts } from "../styles";
+import { sendTransaction } from "./shared/lib/sendTransaction";
 
 interface AccountStyleProps {
   rgb: string;
@@ -139,6 +140,7 @@ const Blockchain: FC<PropsWithChildren<BlockchainProps>> = (
     typeof account !== "undefined" && typeof balances !== "undefined"
       ? balances[account]
       : [];
+
   return (
     <React.Fragment>
       <SAccount
@@ -180,7 +182,10 @@ const Blockchain: FC<PropsWithChildren<BlockchainProps>> = (
                       key={action.method}
                       left
                       rgb={chain.meta.rgb}
-                      onClick={() => action.callback(chainId, address)}
+                      onClick={() => {
+                        action.callback(chainId, address);
+                        // sendTransaction();
+                      }}
                     >
                       {action.method}
                     </SAction>

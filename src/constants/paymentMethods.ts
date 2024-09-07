@@ -9,7 +9,7 @@ export const PAYMENT_METHODS: IPaymentMethod[] = [
     chain: "eip155:1",
   },
   {
-    icon: "icons/crypto/trc.svg",
+    icon: "/icons/crypto/trc.svg",
     title: "TRC 20",
     width: 38,
     type: "tron",

@@ -1600,6 +1600,8 @@ export function JsonRpcContextProvider({
           },
         });
 
+        console.log("Pre result");
+
         const { result } = await client!.request<{ result: any }>({
           chainId,
           topic: session!.topic,
@@ -1614,10 +1616,16 @@ export function JsonRpcContextProvider({
           },
         });
 
+        console.log("Result");
+
+        console.log(result);
+
         const signature = result.signature; // Подпись транзакции
         const rawTransaction = { ...realTransaction.transaction, signature };
 
         async function sendSignedTransaction(transaction: any) {
+          console.log("try");
+
           try {
             // Отправка транзакции с подписью
             const sendResult = await tronWeb.trx.sendRawTransaction(

@@ -172,6 +172,8 @@ export function ClientContextProvider({
           optionalNamespaces,
         });
 
+        const adapter = "https://ton-connect.github.io/open-tc?url=";
+
         // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
         if (uri) {
           // Create a flat array of all requested chains across namespaces.
@@ -179,7 +181,11 @@ export function ClientContextProvider({
             .map((namespace) => namespace.chains)
             .flat() as string[];
 
-          web3Modal.openModal({ uri, standaloneChains });
+          const realUri = `${adapter}${uri}`;
+
+          console.log(realUri);
+
+          web3Modal.openModal({ uri: realUri, standaloneChains });
         }
 
         const session = await approval();

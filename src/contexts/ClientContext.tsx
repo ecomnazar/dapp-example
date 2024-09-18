@@ -183,9 +183,8 @@ export function ClientContextProvider({
 
           const realUri = `${adapter}${uri}`;
 
-          console.log(realUri);
-
-          web3Modal.openModal({ uri: realUri, standaloneChains });
+          web3Modal.openModal();
+          // web3Modal.openModal({ uri: realUri, standaloneChains });
         }
 
         const session = await approval();

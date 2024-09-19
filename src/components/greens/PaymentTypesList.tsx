@@ -172,7 +172,7 @@ export const PaymentTypesList = () => {
         onClose={onCloseWalletConnectedModal}
       />
       <WalletNotConnectedModal
-        modal={checkIsInTelegram()}
+        modal={true}
         onClose={onCloseWalletNotConnectedModal}
       />
     </>

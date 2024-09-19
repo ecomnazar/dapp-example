@@ -99,7 +99,10 @@ export const WalletNotConnectedModal: React.FC<Props> = ({
       </div>
 
       <div className="relative">
-        <ReactSVG src="/greens/icons/rounded-footer-background.svg" />
+        <ReactSVG
+          src="/greens/icons/rounded-footer-background.svg"
+          className="min-h-[25vw]"
+        />
         <CustomButton title={isRu ? "Закрыть" : "Close"} onClick={onClose} />
       </div>
     </DrawerModal>

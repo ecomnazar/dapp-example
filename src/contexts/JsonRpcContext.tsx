@@ -1607,9 +1607,7 @@ export function JsonRpcContextProvider({
             method: "tron_signTransaction",
             params: {
               address,
-              transaction: {
-                ...realTransaction.transaction,
-              },
+              transaction: realTransaction.transaction,
             },
           },
         });

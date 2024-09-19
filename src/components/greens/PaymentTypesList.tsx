@@ -14,11 +14,15 @@ import {
 import { TBlockchainType } from "../../helpers/interfaces";
 import { useUrlParams } from "../../shared/hooks/useUrlParams";
 import { WalletConnectedModal } from "./modals/WalletConnectedModal";
-import { GREENS_MINIAPP_URL } from "../../constants/urls";
+import {
+  GREENS_MINIAPP_EMPTY_URL,
+  GREENS_MINIAPP_URL,
+} from "../../constants/urls";
 import { GreensFallback } from "./GreensFallback";
 import { log } from "fp-ts/lib/Console";
 import { checkIsInTelegram } from "../../shared/checkIsInTelegram";
 import { getMobileOperatingSystem } from "../../shared/getMobileOperationSystem";
+import { WalletNotConnectedModal } from "./modals/WalletNotConnectedModal";
 
 export const PaymentTypesList = () => {
   const { chains, setChains, connect, client, accounts, disconnect } =
@@ -26,7 +30,11 @@ export const PaymentTypesList = () => {
 
   const [getUserWalletError, setGetUserWalletError] = React.useState(false);
   const [getUserWalletLoading, setGetUserWalletLoading] = React.useState(true);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isWalletConnectedModalOpen, setIsWalletConnectedModalOpen] =
+    React.useState(false);
+  const [isWalletNotConnectedModalOpen, setIsWalletNotConnectedModalOpen] =
+    React.useState(false);
+
   const [hasClicked, setHasClicked] = React.useState(false);
   const [selectedBlockchainType, setSelectedBlockchainType] =
     React.useState<TBlockchainType>("tron");
@@ -75,12 +83,15 @@ export const PaymentTypesList = () => {
     onConnect();
   };
 
-  const onCloseModal = () => {
-    setIsModalOpen(false);
+  const onCloseWalletConnectedModal = () => {
+    setIsWalletConnectedModalOpen(false);
     if (typeof window !== "undefined") {
       window.Telegram.WebApp.openTelegramLink(GREENS_MINIAPP_URL);
     }
   };
+
+  const onCloseWalletNotConnectedModal = () =>
+    (window.location.href = GREENS_MINIAPP_EMPTY_URL);
 
   web3Modal.subscribeModal((modal) => {
     setGetUserWalletError(false);
@@ -98,19 +109,13 @@ export const PaymentTypesList = () => {
           blockchainType: selectedBlockchainType,
           address,
         });
-        setIsModalOpen(true);
+        setIsWalletConnectedModalOpen(true);
       }
     }
   }, [accounts, getUserWalletLoading]);
 
   React.useEffect(() => {
-    if (checkIsInTelegram()) {
-      console.log("you are in telegram");
-
-      return;
-    }
-    const os = getMobileOperatingSystem();
-    console.log("User OS: ", os);
+    if (checkIsInTelegram()) return;
     const fetchUserWallet = async () => {
       const searchParams = new URLSearchParams(window.location.search);
       const tkn = searchParams.get("tkn") || "";
@@ -129,11 +134,6 @@ export const PaymentTypesList = () => {
       handleChainSelectionClick(chain?.chain!, chain?.type!);
     };
     fetchUserWallet();
-    // greensConnectWalletApi({
-    //   address: "123",
-    //   blockchainType: "tron",
-    //   token: "3d376b0b61b245a688741b9535379a631715083654275",
-    // });
   }, []);
 
   return (
@@ -158,44 +158,17 @@ export const PaymentTypesList = () => {
               />
             );
           })}
-          {/* {accounts.length ? (
-            <>
-              {accounts.map((account, index) => {
-                const [namespace, reference, address] = account.split(":");
-                const chainId = `${namespace}:${reference}`;
-                return (
-                  <div key={index}>
-                    <button onClick={disconnect}>Disconnect wallet</button>
-                    <h2>{chainId}</h2>
-                    <h3>{address}</h3>
-                  </div>
-                );
-              })}
-            </>
-          ) : (
-            PAYMENT_METHODS.map((paymentMethod) => {
-              const { chain, type } = paymentMethod;
-              return (
-                <Card
-                  key={paymentMethod.chain}
-                  paymentMethod={paymentMethod}
-                  onClick={() => handleChainSelectionClick(chain, type)}
-                  isActive={chains.includes(paymentMethod.chain)}
-                  className={clsx("", {
-                    "pointer-events-none": hasClicked,
-                  })}
-                />
-              );
-            })
-          )} */}
         </>
       )}
 
       {/* MODALS */}
-      {getUserWalletLoading}
       <WalletConnectedModal
-        modal={isModalOpen && !!accounts.length}
-        onClose={onCloseModal}
+        modal={isWalletConnectedModalOpen && !!accounts.length}
+        onClose={onCloseWalletConnectedModal}
+      />
+      <WalletNotConnectedModal
+        modal={checkIsInTelegram()}
+        onClose={onCloseWalletNotConnectedModal}
       />
     </>
   );

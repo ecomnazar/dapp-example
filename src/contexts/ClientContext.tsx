@@ -181,9 +181,9 @@ export function ClientContextProvider({
             .map((namespace) => namespace.chains)
             .flat() as string[];
 
-          const realUri = `${adapter}${uri}`;
+          // const realUri = `${adapter}${uri}`;
 
-          web3Modal.openModal();
+          web3Modal.openModal({ uri, standaloneChains });
           // web3Modal.openModal({ uri: realUri, standaloneChains });
         }
 

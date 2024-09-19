@@ -91,7 +91,7 @@ export const PaymentTypesList = () => {
   };
 
   const onCloseWalletNotConnectedModal = () =>
-    (window.location.href = GREENS_MINIAPP_EMPTY_URL);
+    (window.location.href = "tg://settings");
 
   web3Modal.subscribeModal((modal) => {
     setGetUserWalletError(false);

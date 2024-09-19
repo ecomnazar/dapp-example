@@ -60,14 +60,11 @@ export const PaymentTypesList = () => {
   ) => {
     if (hasClicked) return;
     if (typeof window !== "undefined") {
-      if (navigator.userAgent.includes("Telegram")) {
+      if (window.Telegram) {
         console.log("telegram");
       } else {
         console.log("not telegram");
       }
-      console.log(window);
-      console.log(navigator.userAgent);
-
       return;
     }
     showToast();

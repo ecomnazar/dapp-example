@@ -16,6 +16,7 @@ import { useUrlParams } from "../../shared/hooks/useUrlParams";
 import { WalletConnectedModal } from "./modals/WalletConnectedModal";
 import { GREENS_MINIAPP_URL } from "../../constants/urls";
 import { GreensFallback } from "./GreensFallback";
+import { log } from "fp-ts/lib/Console";
 
 export const PaymentTypesList = () => {
   const { chains, setChains, connect, client, accounts, disconnect } =
@@ -58,6 +59,16 @@ export const PaymentTypesList = () => {
     blockchainType: TBlockchainType
   ) => {
     if (hasClicked) return;
+    if (typeof window !== "undefined") {
+      if (navigator.userAgent.includes("Telegram")) {
+        console.log("telegram");
+      } else {
+        console.log("not telegram");
+      }
+      console.log(navigator.userAgent);
+
+      return;
+    }
     showToast();
     setHasClicked(true);
     setSelectedBlockchainType(blockchainType);

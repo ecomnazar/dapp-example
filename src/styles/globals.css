@@ -42,6 +42,7 @@ background-color: #F3DBBC;
   /* border-radius: 50px; */
 }
 
-.fixViewport {
-  padding-bottom: env(safe-area-inset-bottom);
+.modal{
+  height: 100%; /* Use percentage height */
+  max-height: 100vh;
 }

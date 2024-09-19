@@ -77,14 +77,14 @@ export const WalletNotConnectedModal: React.FC<Props> = ({
   };
 
   return (
-    <DrawerModal isOpen={modal} onClose={onClose} height={450}>
+    <DrawerModal isOpen={modal} onClose={onClose} height={450} disableAnimation>
       <ReactSVG
         src="/greens/icons/close.svg"
         className="w-[36px] absolute top-3 right-3"
         onClick={onClose}
       />
       <div className="flex-1" />
-      <ReactSVG src="/greens/icons/close.svg" className="w-[60px] mx-auto" />
+      <ReactSVG src="/greens/icons/info.svg" className="w-[60px] mx-auto" />
 
       <div className="text-center mb-[40px] mt-[20px] space-y-4">
         <h2 className="text-greensPrimary text-[30px] font-bold">{title}</h2>

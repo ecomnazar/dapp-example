@@ -91,16 +91,11 @@ export const PaymentTypesList = () => {
   };
 
   const onCloseWalletNotConnectedModal = () => {
-    // @ts-ignore
-    window.open("", "_self");
-    window.close();
+    window.location.href = "tg://settings";
     setTimeout(() => {
-      window.location.href = "tg://settings";
-    }, 500); // Adjust the delay if needed
-    // setTimeout(() => {
-    // window.open("", "_self"); // This is needed to point to the current window
-    // window.close(); // Attempt to close the tab
-    // }, 1000); // You may need to adjust the
+      window.open("", "_self"); // This is needed to point to the current window
+      window.close(); // Attempt to close the tab
+    }, 1000); // You may need to adjust the
   };
 
   web3Modal.subscribeModal((modal) => {

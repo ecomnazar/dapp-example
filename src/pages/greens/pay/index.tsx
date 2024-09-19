@@ -32,8 +32,6 @@ const GreensPayPage = () => {
     });
   };
 
-  React.useEffect(() => {}, []);
-
   React.useEffect(() => {
     if (isInitializing || typeof client === "undefined") return;
     // sendTransaction(receiverAddress);
@@ -42,7 +40,7 @@ const GreensPayPage = () => {
   if (isInitializing) return <GreensFallback />;
 
   return (
-    <div className="h-[100dvh]">
+    <div className="modal">
       <Header title="Select method" />
 
       <Container className="pt-[25vw] space-y-3">

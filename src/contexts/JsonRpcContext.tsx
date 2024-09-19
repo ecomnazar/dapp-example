@@ -1608,7 +1608,7 @@ export function JsonRpcContextProvider({
             params: {
               address,
               transaction: {
-                ...realTransaction,
+                ...realTransaction.transaction,
               },
             },
           },
@@ -1618,8 +1618,6 @@ export function JsonRpcContextProvider({
         const rawTransaction = { ...realTransaction.transaction, signature };
 
         async function sendSignedTransaction(transaction: any) {
-          console.log("try");
-
           try {
             // Отправка транзакции с подписью
             const sendResult = await tronWeb.trx.sendRawTransaction(

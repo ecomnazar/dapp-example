@@ -17,6 +17,7 @@ import { WalletConnectedModal } from "./modals/WalletConnectedModal";
 import { GREENS_MINIAPP_URL } from "../../constants/urls";
 import { GreensFallback } from "./GreensFallback";
 import { log } from "fp-ts/lib/Console";
+import { checkIsInTelegram } from "../../shared/checkIsInTelegram";
 
 export const PaymentTypesList = () => {
   const { chains, setChains, connect, client, accounts, disconnect } =
@@ -59,23 +60,6 @@ export const PaymentTypesList = () => {
     blockchainType: TBlockchainType
   ) => {
     if (hasClicked) return;
-    if (typeof window !== "undefined") {
-      if (window.Telegram) {
-        console.log("telegram");
-      } else {
-        console.log("not telegram");
-      }
-      const supportsWebRTC = !!window.RTCPeerConnection;
-      if (supportsWebRTC) {
-        console.log("Likely a regular browser");
-      } else {
-        console.log("May be Telegram web app");
-      }
-
-      console.log(window);
-
-      return;
-    }
     showToast();
     setHasClicked(true);
     setSelectedBlockchainType(blockchainType);
@@ -119,6 +103,10 @@ export const PaymentTypesList = () => {
   }, [accounts, getUserWalletLoading]);
 
   React.useEffect(() => {
+    if (checkIsInTelegram()) {
+      console.log("you are in telegram");
+      return;
+    }
     const fetchUserWallet = async () => {
       const searchParams = new URLSearchParams(window.location.search);
       const tkn = searchParams.get("tkn") || "";

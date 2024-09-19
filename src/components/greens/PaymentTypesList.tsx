@@ -65,6 +65,7 @@ export const PaymentTypesList = () => {
       } else {
         console.log("not telegram");
       }
+      console.log(window);
       console.log(navigator.userAgent);
 
       return;

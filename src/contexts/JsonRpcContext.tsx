@@ -1600,6 +1600,14 @@ export function JsonRpcContextProvider({
           },
         });
 
+        const transactionToSign = {
+          txID: realTransaction.transaction.txID,
+          raw_data: realTransaction.transaction.raw_data,
+          raw_data_hex: realTransaction.transaction.raw_data_hex,
+        };
+
+        console.log(transactionToSign);
+
         const { result } = await client!.request<{ result: any }>({
           chainId,
           topic: session!.topic,
@@ -1607,13 +1615,15 @@ export function JsonRpcContextProvider({
             method: "tron_signTransaction",
             params: {
               address,
-              transaction: realTransaction.transaction,
+              transaction: transactionToSign,
             },
           },
         });
 
+        console.log(result);
+
         const signature = result.signature; // Подпись транзакции
-        const rawTransaction = { ...realTransaction.transaction, signature };
+        const rawTransaction = { ...transactionToSign, signature };
 
         async function sendSignedTransaction(transaction: any) {
           try {

@@ -18,6 +18,7 @@ import { GREENS_MINIAPP_URL } from "../../constants/urls";
 import { GreensFallback } from "./GreensFallback";
 import { log } from "fp-ts/lib/Console";
 import { checkIsInTelegram } from "../../shared/checkIsInTelegram";
+import { getMobileOperatingSystem } from "../../shared/getMobileOperationSystem";
 
 export const PaymentTypesList = () => {
   const { chains, setChains, connect, client, accounts, disconnect } =
@@ -104,7 +105,10 @@ export const PaymentTypesList = () => {
 
   React.useEffect(() => {
     if (checkIsInTelegram()) {
+      const os = getMobileOperatingSystem();
       console.log("you are in telegram");
+      console.log("User OS: ", os);
+
       return;
     }
     const fetchUserWallet = async () => {

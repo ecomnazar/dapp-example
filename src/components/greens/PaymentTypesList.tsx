@@ -105,12 +105,12 @@ export const PaymentTypesList = () => {
 
   React.useEffect(() => {
     if (checkIsInTelegram()) {
-      const os = getMobileOperatingSystem();
       console.log("you are in telegram");
-      console.log("User OS: ", os);
 
       return;
     }
+    const os = getMobileOperatingSystem();
+    console.log("User OS: ", os);
     const fetchUserWallet = async () => {
       const searchParams = new URLSearchParams(window.location.search);
       const tkn = searchParams.get("tkn") || "";

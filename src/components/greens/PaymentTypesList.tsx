@@ -86,16 +86,16 @@ export const PaymentTypesList = () => {
   const onCloseWalletConnectedModal = () => {
     setIsWalletConnectedModalOpen(false);
     if (typeof window !== "undefined") {
-      window.Telegram.WebApp.openTelegramLink(GREENS_MINIAPP_URL);
+      window.location.href = GREENS_MINIAPP_URL;
     }
   };
 
   const onCloseWalletNotConnectedModal = () => {
     window.location.href = "tg://settings";
     setTimeout(() => {
-      window.open("", "_self"); // This is needed to point to the current window
-      window.close(); // Attempt to close the tab
-    }, 1000); // You may need to adjust the
+      window.open("", "_self");
+      window.close();
+    }, 1000);
   };
 
   web3Modal.subscribeModal((modal) => {

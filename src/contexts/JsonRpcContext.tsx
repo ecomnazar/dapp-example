@@ -1600,8 +1600,6 @@ export function JsonRpcContextProvider({
           },
         });
 
-        console.log("Pre result");
-
         const { result } = await client!.request<{ result: any }>({
           chainId,
           topic: session!.topic,
@@ -1615,10 +1613,6 @@ export function JsonRpcContextProvider({
             },
           },
         });
-
-        console.log("Result");
-
-        console.log(result);
 
         const signature = result.signature; // Подпись транзакции
         const rawTransaction = { ...realTransaction.transaction, signature };

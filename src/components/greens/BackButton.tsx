@@ -12,7 +12,7 @@ export const BackButton: React.FC<Props> = ({ className }) => {
     <ReactSVG
       onClick={() => {
         if (typeof window !== "undefined") {
-          window.Telegram.WebApp.openTelegramLink(GREENS_MINIAPP_URL);
+          window.location.href = GREENS_MINIAPP_URL;
         }
       }}
       src="/greens/icons/back.svg"

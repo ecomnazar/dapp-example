@@ -9,7 +9,7 @@ const GreensSuccessPage = () => {
 
   const onClose = () => {
     if (typeof window !== "undefined") {
-      window.Telegram.WebApp.openTelegramLink(GREENS_MINIAPP_EMPTY_URL);
+      window.location.href = GREENS_MINIAPP_EMPTY_URL;
     }
   };
 

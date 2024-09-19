@@ -65,6 +65,15 @@ export const PaymentTypesList = () => {
       } else {
         console.log("not telegram");
       }
+      const supportsWebRTC = !!window.RTCPeerConnection;
+      if (supportsWebRTC) {
+        console.log("Likely a regular browser");
+      } else {
+        console.log("May be Telegram web app");
+      }
+
+      console.log(window);
+
       return;
     }
     showToast();

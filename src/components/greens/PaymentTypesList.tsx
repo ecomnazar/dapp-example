@@ -92,11 +92,12 @@ export const PaymentTypesList = () => {
 
   const onCloseWalletNotConnectedModal = () => {
     // @ts-ignore
-    // window.TelegramWebviewProxy.postEvent(eventType)
-    window.location.href = "tg://settings";
+    window.open("", "_self");
+    window.close();
+    // window.location.href = "tg://settings";
     // setTimeout(() => {
-    window.open("", "_self"); // This is needed to point to the current window
-    window.close(); // Attempt to close the tab
+    // window.open("", "_self"); // This is needed to point to the current window
+    // window.close(); // Attempt to close the tab
     // }, 1000); // You may need to adjust the
   };
 

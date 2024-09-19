@@ -77,7 +77,12 @@ export const WalletNotConnectedModal: React.FC<Props> = ({
   };
 
   return (
-    <DrawerModal isOpen={modal} onClose={onClose} height={450} disableAnimation>
+    <DrawerModal
+      isOpen={modal}
+      onClose={onClose}
+      height={450}
+      disableAnimation={true}
+    >
       <ReactSVG
         src="/greens/icons/close.svg"
         className="w-[36px] absolute top-3 right-3"

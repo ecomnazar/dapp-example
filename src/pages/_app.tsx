@@ -19,7 +19,7 @@ declare global {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Script src="https://telegram.org/js/telegram-web-app.js" />
+      {/* <Script src="https://telegram.org/js/telegram-web-app.js" /> */}
       <Toaster />
       <Metadata />
       <ChainDataContextProvider>

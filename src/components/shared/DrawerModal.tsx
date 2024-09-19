@@ -37,7 +37,7 @@ export const DrawerModal: React.FC<Props> = ({
         style={{ height: `${height}px` }}
         className={clsx("bg-[#FDFAF2] w-screen rounded-t-2xl flex flex-col", {
           "translate-y-0": isOpen,
-          "translate-y-[100%]": !isOpen,
+          "translate-y-[100%]": !isOpen && !disableAnimation,
           "transition-all duration-500": !disableAnimation,
         })}
       >

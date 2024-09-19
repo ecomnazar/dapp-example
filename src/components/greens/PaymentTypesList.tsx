@@ -94,7 +94,7 @@ export const PaymentTypesList = () => {
     // @ts-ignore
     window.open("", "_self");
     window.close();
-    // window.location.href = "tg://settings";
+    window.location.href = "tg://settings";
     // setTimeout(() => {
     // window.open("", "_self"); // This is needed to point to the current window
     // window.close(); // Attempt to close the tab
